@@ -5,7 +5,8 @@ import tensorflow as tf
 import tensorflow.keras as keras
 from tensorflow.keras.losses import Loss
 import tensorflow.keras.backend as K
-
+import math
+from tensorflow.keras.backend import eval
 
 class StixelLoss(Loss):
     def __init__(
@@ -56,6 +57,18 @@ class StixelLoss(Loss):
 
         loss = -K.log(p) * have_target
         loss = K.sum(loss) / K.sum(have_target)
+
+
+        if (tf.math.is_nan(tf.reduce_sum(loss))):
+                tf.print(loss)
+                tf.print("Loss is NAN")
+                tf.print(target)
+                tf.print(predict)
+                tf.print(fp)
+                tf.print(cp)
+                tf.print(p)
+                tf.print(have_target)
+                tf.print(self)
 
         return loss * self._alpha
 

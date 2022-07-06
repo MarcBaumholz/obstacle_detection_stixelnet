@@ -26,7 +26,7 @@ from config import Config
 from data_loader import WaymoStixelDataset
 from models import StixelLoss, build_stixel_net
 import utility
-
+from tensorflow.keras.utils import OrderedEnqueuer
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -74,7 +74,7 @@ def main():
 
     model = build_stixel_net()
     loss_func = StixelLoss()
-    opt = optimizers.Adam(0.0001)
+    opt = optimizers.Adam(0.0001, clipnorm=1)
     callbacks = [
         ModelCheckpoint(
             os.path.join(dt_config.SAVED_MODELS_PATH, "model-{epoch:03d}-{loss:.4f}.h5"),
@@ -104,7 +104,11 @@ def main():
         assert os.path.isfile(parsed_args.load_checkpoint)
         model.load_weights(parsed_args.load_checkpoint)
 
-    history = model.fit(
+
+#    enq = OrderedEnqueuer(train_set, use_multiprocessing=True)
+#    enq.start(workers=10, max_queue_size=20)
+
+    history = model.fit_generator(
         train_set,
         steps_per_epoch=len(train_set),
         validation_data=val_set,
