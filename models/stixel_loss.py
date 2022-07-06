@@ -55,8 +55,8 @@ class StixelLoss(Loss):
 
         p = fp * (tf.math.ceil(stixel_pos) - stixel_pos) + cp * (stixel_pos - tf.math.floor(stixel_pos))
 
-        loss = -K.log(p) * have_target
-        loss = K.sum(loss) / K.sum(have_target)
+        loss = -K.log(p + tf.keras.backend.epsilon()) * have_target
+        loss = K.sum(loss) / (K.sum(have_target) + tf.keras.backend.epsilon())
 
 
         if (tf.math.is_nan(tf.reduce_sum(loss))):

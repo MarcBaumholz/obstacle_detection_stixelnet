@@ -74,7 +74,8 @@ def main():
 
     model = build_stixel_net()
     loss_func = StixelLoss()
-    opt = optimizers.Adam(0.000025, clipnorm=1)
+    opt = optimizers.Adam(3e-4, clipnorm=0.1)
+
     callbacks = [
         ModelCheckpoint(
             os.path.join(dt_config.SAVED_MODELS_PATH, "model-{epoch:03d}-{loss:.4f}.h5"),
