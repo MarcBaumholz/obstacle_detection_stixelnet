@@ -153,7 +153,7 @@ class WaymoStixelDataset(Sequence):
 
     def _generate_label_image(self, idx):
         img = cv2.imread(os.path.join(self._data_path, self._image_paths[idx]))
-        plt.imshow(img)
+        #plt.imshow(img)
         positions = np.array(self._stixels_pos[idx], dtype=np.float32)
         height, width = img.shape[:2]
 
