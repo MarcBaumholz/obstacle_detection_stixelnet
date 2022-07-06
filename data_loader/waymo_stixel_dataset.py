@@ -4,8 +4,9 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.utils.data_utils import Sequence
-
+#from tensorflow.keras.utils.data_utils import Sequence
+#import tf.keras.utils.Sequence
+from tensorflow.keras.utils import Sequence
 
 def visualize_stixel(
         image,
